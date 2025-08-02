@@ -154,3 +154,93 @@ function saveTaskChanges() {
   renderTasks(); // Re-render to reflect changes
   closeTaskModal();
 }
+/**
+ * Opens the add new task modal.
+ */
+function openAddTaskModal() {
+    // Reset form fields
+    document.getElementById('add-modal-title').value = '';
+    document.getElementById('add-modal-description').value = '';
+    document.getElementById('add-modal-status').value = 'todo';
+    addTaskModal.classList.remove('hidden');
+}
+
+/**
+ * Closes the add new task modal.
+ */
+function closeAddTaskModal() {
+    addTaskModal.classList.add('hidden');
+}
+/**
+ * Creates a new task from the add task modal form and adds it to the list.
+ */
+function createNewTask() {
+    const title = document.getElementById('add-modal-title').value.trim();
+    const description = document.getElementById('add-modal-description').value.trim();
+    const status = document.getElementById('add-modal-status').value;
+
+    if (!title) {
+        alert("Task title is required.");
+        return;
+    }
+
+    const newTask = {
+        id: Date.now(), // Simple ID generation, consider UUID for production
+        title: title,
+        description: description,
+        status: status
+    };
+
+    initialTasks.push(newTask);
+    renderTasks(); // Re-render to show new task
+    closeAddTaskModal();
+}
+// --- UI Interactions ---
+
+/**
+ * Toggles the dark/light theme.
+ */
+function toggleTheme() {
+  const currentTheme = document.body.getAttribute('data-theme');
+  if (currentTheme === 'dark') {
+    document.body.removeAttribute('data-theme');
+  } else {
+    document.body.setAttribute('data-theme', 'dark');
+  }
+}
+
+/**
+ * Toggles the visibility of the sidebar.
+ */
+function toggleSidebar() {
+  sideBar.classList.toggle('show');
+}
+
+// --- Event Listeners ---
+document.addEventListener('DOMContentLoaded', () => {
+  renderTasks(); // Initial render
+
+  // Modal Event Listeners
+  document.getElementById('close-modal-btn').addEventListener('click', closeTaskModal);
+  document.getElementById('save-task-btn').addEventListener('click', saveTaskChanges);
+  
+  document.getElementById('close-add-modal-btn').addEventListener('click', closeAddTaskModal);
+  document.getElementById('create-task-btn').addEventListener('click', createNewTask);
+ // UI Control Event Listeners
+  themeToggleBtn.addEventListener('click', toggleTheme);
+  sidebarToggleBtn.addEventListener('click', toggleSidebar);
+  if (mobileSidebarToggleBtn) {
+      mobileSidebarToggleBtn.addEventListener('click', toggleSidebar);
+  }
+  document.getElementById('add-task-btn').addEventListener('click', openAddTaskModal);
+
+  // Close modals if clicked outside of content
+  window.addEventListener('click', (event) => {
+    if (event.target === taskModal) {
+      closeTaskModal();
+    }
+    if (event.target === addTaskModal) {
+        closeAddTaskModal();
+    }
+  });
+});
