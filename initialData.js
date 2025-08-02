@@ -59,3 +59,98 @@ const themeToggleBtn = document.getElementById('theme-toggle');
 const sidebarToggleBtn = document.getElementById('sidebar-toggle');
 const mobileSidebarToggleBtn = document.querySelector('.sidebar-toggle-mobile'); // Added selector
 const sideBar = document.getElementById('side-bar');
+
+// --- Utility Functions ---
+
+/**
+ * Updates the task count displayed in each column header.
+ */
+function updateColumnCounts() {
+  const todoCount = initialTasks.filter(t => t.status === 'todo').length;
+  const doingCount = initialTasks.filter(t => t.status === 'doing').length;
+  const doneCount = initialTasks.filter(t => t.status === 'done').length;
+
+  todoCountEl.textContent = todoCount;
+  doingCountEl.textContent = doingCount;
+  doneCountEl.textContent = doneCount;
+}
+
+/**
+ * Creates a task DOM element.
+ * @param {Object} task - The task object.
+ * @returns {HTMLElement} - The task div element.
+ */
+function createTaskElement(task) {
+  const taskDiv = document.createElement('div');
+  taskDiv.className = 'task';
+  taskDiv.dataset.id = task.id;
+  taskDiv.innerHTML = `
+    <h3>${task.title}</h3>
+    <p>${task.description}</p>
+  `;
+  taskDiv.addEventListener('click', () => openTaskModal(task));
+  return taskDiv;
+}
+// --- Task Rendering ---
+
+/**
+ * Renders all tasks to their respective columns.
+ */
+function renderTasks() {
+  // Clear existing tasks
+  todoTasksContainer.innerHTML = '';
+  doingTasksContainer.innerHTML = '';
+  doneTasksContainer.innerHTML = '';
+// Render tasks based on status
+  initialTasks.forEach(task => {
+    const taskElement = createTaskElement(task);
+    switch (task.status) {
+      case 'todo':
+        todoTasksContainer.appendChild(taskElement);
+        break;
+      case 'doing':
+        doingTasksContainer.appendChild(taskElement);
+        break;
+      case 'done':
+        doneTasksContainer.appendChild(taskElement);
+        break;
+    }
+  });
+
+  updateColumnCounts();
+}
+
+// --- Modal Handling ---
+
+/**
+ * Opens the edit task modal with the given task's data.
+ * @param {Object} task - The task to edit.
+ */
+function openTaskModal(task) {
+  currentTask = task;
+  document.getElementById('modal-title').value = task.title || '';
+  document.getElementById('modal-description').value = task.description || '';
+  document.getElementById('modal-status').value = task.status || 'todo';
+  taskModal.classList.remove('hidden');
+}
+
+/**
+ * Closes the edit task modal.
+ */
+function closeTaskModal() {
+  taskModal.classList.add('hidden');
+  currentTask = null;
+}
+/**
+ * Saves the changes made in the edit task modal.
+ */
+function saveTaskChanges() {
+  if (!currentTask) return;
+
+  currentTask.title = document.getElementById('modal-title').value;
+  currentTask.description = document.getElementById('modal-description').value;
+  currentTask.status = document.getElementById('modal-status').value;
+
+  renderTasks(); // Re-render to reflect changes
+  closeTaskModal();
+}
