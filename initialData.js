@@ -1,3 +1,4 @@
+
 const initialTasks = [
   {
     id: 1,
@@ -40,3 +41,21 @@ const initialTasks = [
     status: "done",
   },
 ];
+// --- State ---
+let currentTask = null; // Holds the task being edited
+
+// --- DOM Elements ---
+const todoTasksContainer = document.getElementById('todo-tasks');
+const doingTasksContainer = document.getElementById('doing-tasks');
+const doneTasksContainer = document.getElementById('done-tasks');
+const todoCountEl = document.getElementById('todo-count');
+const doingCountEl = document.getElementById('doing-count');
+const doneCountEl = document.getElementById('done-count');
+
+const taskModal = document.getElementById('task-modal');
+const addTaskModal = document.getElementById('add-task-modal');
+
+const themeToggleBtn = document.getElementById('theme-toggle');
+const sidebarToggleBtn = document.getElementById('sidebar-toggle');
+const mobileSidebarToggleBtn = document.querySelector('.sidebar-toggle-mobile'); // Added selector
+const sideBar = document.getElementById('side-bar');
