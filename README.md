@@ -38,3 +38,35 @@ Check the updated Figma Design: [Figma Link](https://www.figma.com/design/y7bFCU
 ## Expected Outcome
 
 A fully functional **dynamic task board** where tasks appear under the correct columns, and users can **open a modal to view/edit** task details. The project will follow **clean, well-documented, and maintainable code practices**, ensuring a professional and scalable implementation.
+
+
+
+#user data -------JSL04 Project
+Dynamic task rendering from initialTasks.
+A fully functional modal for editing and adding tasks.
+Responsive design and dark mode support.
+Modular and maintainable code structure.
+
+Kanban Board Layout:
+
+  1-  tasks are organized  into columns: TODO, DOING, and DONE.
+  2-  Each task card contains a title .
+  3-  The number of tasks in each column is displayed at the top .
+
+Task Interaction:
+  1-  Clicking on a task opens a modal for editing details such as title, description, status, and priority.
+
+Add New Task Modal:
+  1-  A modal appears when the + Add New Task button is clicked.
+
+Fields include:
+  Title
+  Description
+  Status (dropdown: todo, doing, done)
+  Priority (dropdown: low, medium, high)
+
+Dark Mode Toggle:
+  A toggle switch is present to switch between light and dark modes.
+
+Sidebar Visibility:
+  A button to hide/show the sidebar is available.
